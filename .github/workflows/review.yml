@@ -5,12 +5,17 @@ on: [push, pull_request]
 jobs:
     build: 
         runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            python-version: [3.8,3.9,'3.10']
+
+
         steps:
             - uses: actions/checkout@v4
             - name: 파이썬 설치
               uses: actions/setup-python@v5
               with:
-                python-version: 3.9
+                python-version: ${{ matrix.python-version }}
             - name: 파이썬 패키치 설치
               run: |
                 python -m pip install --upgrade pip
