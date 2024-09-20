@@ -1,14 +1,13 @@
-name: Python PostgreSQL Test
+name: Database Integration Test
 
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     services:
       postgres:
-        image: postgres:13  # PostgreSQL 버전 지정
+        image: postgres:13
         env:
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
@@ -31,15 +30,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Wait for PostgreSQL
+      - name: Run integration tests
         run: |
-          # PostgreSQL 서버가 준비될 때까지 대기합니다.
-          while ! pg_isready -h localhost -p 5432; do sleep 1; done
-      - name: Run tests
+          python client.py
         env:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
           POSTGRES_DB: test_db
-        run: pytest
