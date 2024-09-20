@@ -3,6 +3,7 @@
 import os
 import psycopg2
 
+
 def main():
     """PostgreSQL 데이터베이스에 연결하여 간단한 CRUD 작업을 수행합니다."""
     try:

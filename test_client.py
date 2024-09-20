@@ -1,5 +1,3 @@
-# test_client.py
-
 import os
 import psycopg2
 import pytest
